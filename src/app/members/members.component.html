@@ -5,7 +5,27 @@
     <div id="page" [@moveInLeft]="state">
       <h2>Hey {{ name.auth.displayName }}!</h2>
 
-      <img src="assets/images/filler.png" />
+      <!--<img src="assets/images/filler.png" />-->
+    </div>
+
+    <div class="user">
+      <form id="userForm">
+        <p>
+          <label>First Name</label>
+          <input type="text" [(ngModel)]="firstName" name="firstName" placeholder="First Name..">
+        </p>
+        <p>
+          <label>Last Name</label>
+          <input type="text" [(ngModel)]="lastName" name="lastName" placeholder="Last Name..">
+        </p>
+        <p>
+          <label>Email</label>
+          <input type="text" [(ngModel)]="email" name="email" placeholder="Email..">
+        </p>
+        <p>
+          <input type="submit" value="Submit" (click)="addMember()">
+        </p>
+      </form>
     </div>
     
 </div>

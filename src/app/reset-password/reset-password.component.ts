@@ -12,10 +12,8 @@ import * as firebase from 'firebase';
   host: {'[@moveIn]': ''}
 })
 export class ResetPasswordComponent implements OnInit {
-
     state: string = '';
     error: any;
-    //var auth = firebase.auth();
     
     constructor(public af: AngularFire, private router: Router) {
       this.af.auth.subscribe(auth => { 

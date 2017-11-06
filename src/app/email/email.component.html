@@ -1,6 +1,6 @@
 <div class="form-container">
     <a routerLink="/login" id="goback">Go back</a>
-    <h2>Custom Login</h2>
+    <h2>Email Login</h2>
 
     <span class="error" *ngIf="error" [@fallIn]='state'>{{ error }}</span>
 
@@ -11,5 +11,6 @@
 
       <button type="submit" [disabled]="!formData.valid" class="basic-btn">Log in</button>
       <a routerLink="/signup" class="alc">Don't have an account?</a>
-  </form>
+      <a routerLink="/reset-password" class="alc">Forgot password?</a>
+    </form>
 </div>

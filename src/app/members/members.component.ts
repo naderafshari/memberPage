@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 import { Router } from '@angular/router';
 import { moveIn, fallIn, moveInLeft } from '../router.animations';
-//import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase';
 
 @Component({
@@ -32,11 +31,11 @@ export class MembersComponent implements OnInit {
 
     Db.ref('members/' + this.name.uid).once('value').then(function(snapshot) {
       //const firstName = (snapshot.val() && snapshot.val().firstname) || 'Anonymous';
-      const user = snapshot.val();
+      const member = snapshot.val();
       //console.log(user);
-      this.firstName = user.firstname;
-      this.lastName = user.lastname;
-      this.email = user.email;
+      this.firstName = member.firstname;
+      this.lastName = member.lastname;
+      this.email = member.email;
     }.bind(this));
 
   }
@@ -44,7 +43,7 @@ export class MembersComponent implements OnInit {
   addMember() {
     var Db = firebase.database();
 
-    Db.ref('members/' + this.name.uid).set({   //make the id unique somehow
+    Db.ref('members/' + this.name.uid).set({
       firstname: this.firstName,
       lastname: this.lastName,
       email: this.email,

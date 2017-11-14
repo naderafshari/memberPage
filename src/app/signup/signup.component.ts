@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 import { Router } from '@angular/router';
+import * as firebase from 'firebase';
 import { moveIn, fallIn } from '../router.animations';
+import { Roles } from '../user';
 
 @Component({
   selector: 'app-signup',
@@ -14,20 +16,28 @@ export class SignupComponent implements OnInit {
 
   state: string = '';
   error: any;
-
+  
   constructor(public af: AngularFire,private router: Router) {
 
   }
 
   onSubmit(formData) {
+    var Db = firebase.database();
+
     if(formData.valid) {
       console.log(formData.value);
-      this.af.auth.createUser({
+        this.af.auth.createUser({
         email: formData.value.email,
         password: formData.value.password
       }).then(
         (success) => {
-        this.router.navigate(['/members'])
+          var user = firebase.auth().currentUser;
+          Db.ref('members/' + user.uid).set({
+            email: user.email,
+            photourl: '',
+            roles: {author: true}
+          });
+          this.router.navigate(['/members'])
       }).catch(
         (err) => {
         this.error = err;

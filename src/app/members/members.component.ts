@@ -3,7 +3,6 @@ import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 import { Router } from '@angular/router';
 import { moveIn, fallIn, moveInLeft } from '../router.animations';
 import * as firebase from 'firebase';
-import { Roles } from '../user'
 
 @Component({
   selector: 'app-members',
@@ -18,7 +17,7 @@ export class MembersComponent implements OnInit {
   lastName: string;
   email: string;
   photoURL: string;
-  roles: Roles;
+  roles: string;
 
   constructor(public af: AngularFire,private router: Router) {
     

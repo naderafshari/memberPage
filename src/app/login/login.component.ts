@@ -2,6 +2,7 @@ import { Component, OnInit, HostBinding } from '@angular/core';
 import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 import { Router } from '@angular/router';
 import { moveIn } from '../router.animations';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -13,11 +14,14 @@ import { moveIn } from '../router.animations';
 export class LoginComponent implements OnInit {
 
   error: any;
-  constructor(public af: AngularFire,private router: Router) {
+  name: any;
+  roles: string;
 
-      this.af.auth.subscribe(auth => { 
+    constructor(public af: AngularFire,private router: Router) {
+    this.af.auth.subscribe(auth => { 
       if(auth) {
-        this.router.navigateByUrl('/members');
+        this.name = auth;
+        //this.redirect();
       }
     });
 
@@ -29,7 +33,8 @@ export class LoginComponent implements OnInit {
       method: AuthMethods.Popup,
     }).then(
         (success) => {
-        this.router.navigate(['/members']);
+          this.redirect();
+        //this.router.navigate(['/members']);
       }).catch(
         (err) => {
         this.error = err;
@@ -42,13 +47,30 @@ export class LoginComponent implements OnInit {
       method: AuthMethods.Popup,
     }).then(
         (success) => {
-        this.router.navigate(['/members']);
+          this.redirect();
+        //this.router.navigate(['/members']);
       }).catch(
         (err) => {
         this.error = err;
       })
   }
 
+  redirect()
+  {
+    var Db = firebase.database();
+    
+    Db.ref('members/' + this.name.uid).once('value').then(function(snapshot) {
+      const member = snapshot.val();
+      this.roles = member.roles;
+    }.bind(this));
+
+    if (this.roles == 'author'){
+      this.router.navigateByUrl('/members');
+    }
+    else {
+      this.router.navigateByUrl('/signup');
+    }
+  }
 
   ngOnInit() {
   }

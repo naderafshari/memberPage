@@ -3,7 +3,6 @@ import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { moveIn, fallIn } from '../router.animations';
-import { Roles } from '../user';
 
 @Component({
   selector: 'app-signup',
@@ -35,7 +34,7 @@ export class SignupComponent implements OnInit {
           Db.ref('members/' + user.uid).set({
             email: user.email,
             photourl: '',
-            roles: {author: true}
+            roles: 'author'
           });
           this.router.navigate(['/members'])
       }).catch(

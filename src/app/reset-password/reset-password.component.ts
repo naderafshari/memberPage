@@ -31,10 +31,10 @@ export class ResetPasswordComponent implements OnInit {
 
       auth.sendPasswordResetEmail(formData.value.email).then(function() {
         // Email sent.
+        this.router.navigateByUrl('/login-email');
       }).catch(function(error) {
         // An error happened.
       });
-      this.router.navigateByUrl('/login-email');
     }    
   }
 
